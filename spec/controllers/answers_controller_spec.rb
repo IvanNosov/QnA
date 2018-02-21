@@ -57,7 +57,7 @@ RSpec.describe AnswersController, type: :controller do
         post :create, params: { question_id: question,
                                 answer: attributes_for(:answer, question: question) }
         expect(response)
-            .to redirect_to question_answer_path(question, assigns(:answer))
+          .to redirect_to question_answer_path(question, assigns(:answer))
       end
     end
 
