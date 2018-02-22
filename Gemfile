@@ -15,10 +15,11 @@ gem 'coffee-rails', '~> 4.2'
 gem 'jbuilder', '~> 2.5'
 gem 'slim-rails'
 gem 'turbolinks', '~> 5'
+gem 'devise'
+gem 'twitter-bootstrap-rails'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'capybara', '~> 2.13'
   gem 'factory_bot_rails'
   gem 'rails-controller-testing'
   gem 'rspec-rails'
@@ -27,6 +28,9 @@ end
 
 group :test do
   gem 'shoulda-matchers'
+  gem 'faker'
+  gem 'capybara'
+  gem 'launchy'
 end
 
 group :development do
@@ -34,6 +38,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'web-console', '>= 3.3.0'
+  gem 'letter_opener'
 end
 
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]

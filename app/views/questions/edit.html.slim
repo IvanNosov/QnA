@@ -1,0 +1,12 @@
+.row
+  h3 Edit Question
+  = form_for @question do |f|
+    .form-group
+      = f.label :title
+      = f.text_field :title, class: 'form-control'
+    .form-group
+      = f.label :body
+      = f.text_area :body, class: 'form-control'
+    .form-group
+      .actions
+        = f.submit 'Edit', class: 'btn btn-primary'
