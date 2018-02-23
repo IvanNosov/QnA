@@ -2,6 +2,7 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :set_question
   before_action :set_answer, only: :destroy
+  before_action :author?, only: :destroy
 
   def new
     @answer = @question.answers.new
@@ -20,12 +21,17 @@ class AnswersController < ApplicationController
 
   def destroy
     @answer = @question.answers.find(params[:id])
-    @answer.destroy if current_user.author_of?(@answer)
+    @answer.destroy
     redirect_to @question, notice: 'Your answer was successfully deleted.'
   end
 
 
   private
+
+  def author?
+    return nil if @answer.author? current_user
+    redirect_to question_path(@question), notice: 'You are not author of this answer!'
+  end
 
   def set_question
     @question = Question.find(params[:question_id])
