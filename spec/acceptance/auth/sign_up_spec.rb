@@ -7,14 +7,13 @@ feature 'User sign up', %q{
 } do
 
   scenario 'Sign up with valid data' do
-    visit questions_path
+    visit new_user_session_path
+
 
     click_on 'Sign up'
-
     fill_in 'Email', with: 'test@test.com'
     fill_in 'Password', with: '123456'
     fill_in 'Password confirmation', with: '123456'
-
     click_button 'Sign up'
 
     expect(page).to have_content('Welcome! You have signed up successfully.')
@@ -22,7 +21,7 @@ feature 'User sign up', %q{
   end
 
   scenario 'Sign up with invalid data' do
-    visit questions_path
+    visit new_user_session_path
 
     click_on 'Sign up'
 

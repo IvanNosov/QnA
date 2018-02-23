@@ -13,7 +13,7 @@ feature 'Delete question', %q{
     sign_in user
     question
 
-    visit questions_path
+    visit question_path(question)
     click_on 'Delete'
 
     expect(page).to have_content 'Your question was successfully deleted.'

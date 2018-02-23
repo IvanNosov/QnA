@@ -13,8 +13,8 @@ feature 'Create question', %q{
 
     visit '/questions'
     click_on 'Ask question'
-    fill_in 'Title', with: 'Test question'
-    fill_in 'Text', with: 'text text text'
+    fill_in 'Title', with: 'Test'
+    fill_in 'Body', with: 'test'
     click_on 'Create'
 
     expect(page).to have_content 'Your question successfully created.'

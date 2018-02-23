@@ -11,7 +11,6 @@ feature 'User sign out', %q{
   scenario 'Registered user try to sign out' do
     sign_in user
     visit questions_path
-
     click_on 'Sign out'
 
     expect(page).to have_content 'Signed out successfully.'

@@ -14,15 +14,11 @@ feature 'Delete answer', %q{
     sign_in user
     answer
     visit question_path(question)
-    click_on 'Delete'
+    click_on 'x'
 
     expect(page).to have_content 'Your answer was successfully deleted.'
     expect(current_path).to eq question_path(question)
   end
 
-  scenario 'Not authenticated user tries delete question' do
-    visit question_path(question)
-    expect(page).to_not have_content 'Delete'
-    expect(current_path).to eq question_path(question)
-  end
+
 end
