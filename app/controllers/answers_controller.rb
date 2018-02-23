@@ -1,8 +1,12 @@
 class AnswersController < ApplicationController
+  # skip_before_action :verify_authenticity_token
   before_action :authenticate_user!, except: %i[index show]
   before_action :set_question
-  before_action :set_answer, only: :destroy
+  before_action :set_answer, only: %i[show destroy]
   before_action :author?, only: :destroy
+
+
+  def show; end
 
   def new
     @answer = @question.answers.new
@@ -12,16 +16,12 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
-    if @answer.save
-      redirect_to @question, notice: 'Your answer was added.'
-    else
-      render 'questions/show'
-    end
+    @answer.save
   end
 
   def destroy
     @answer.destroy
-    redirect_to @question, notice: 'Your answer was successfully deleted.'
+    redirect_to question_path(@question), notice: 'Your answer was successfully deleted.'
   end
 
 

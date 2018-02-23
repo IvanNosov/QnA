@@ -1,22 +1,25 @@
 require 'rails_helper'
 
-feature 'Create answer', %q{
+feature 'Answer the question', %q{
   In order to answer for question
   As an Authenticated user
   I want to be able to create answer
 } do
 
-  given(:user) { create(:user) }
-  given(:question) { create(:question) }
+  given(:user) {create(:user)}
+  given(:question) {create(:question)}
 
-  scenario 'Authenticated user creates answer' do
+  scenario 'Authenticated user creates answer', js: true do
     sign_in user
 
     visit question_path(question)
     fill_in 'Body', with: 'Test answer'
     click_on 'Give an answer'
 
-    expect(page).to have_content 'Your answer was added.'
+    within '.answers' do
+      expect(page).to have_content 'Test answer'
+    end
     expect(current_path).to eq question_path(question)
   end
+
 end

@@ -17,13 +17,13 @@ gem 'slim-rails'
 gem 'turbolinks', '~> 5'
 gem 'devise'
 gem 'twitter-bootstrap-rails'
+gem 'jquery-rails'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails'
   gem 'rails-controller-testing'
   gem 'rspec-rails'
-  gem 'selenium-webdriver'
 end
 
 group :test do
@@ -31,6 +31,8 @@ group :test do
   gem 'faker'
   gem 'capybara'
   gem 'launchy'
+  gem 'database_cleaner'
+  gem "capybara-webkit"
 end
 
 group :development do
