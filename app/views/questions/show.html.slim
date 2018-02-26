@@ -1,9 +1,11 @@
 = render 'common/errors', resource: @answer
 .row
-  h2= @question.title
+  h3 Question
+  h4= @question.title
   p= @question.body
   - if user_signed_in? && current_user.author_of?(@question)
-    = link_to 'Delete', question_path(@question), method: :delete
+    = link_to 'Edit', edit_question_path(@question), class: 'btn btn-warning btn-xs'
+    = link_to 'Delete', question_path(@question), method: :delete, class: 'btn btn-danger btn-xs'
 
 .row
   - if user_signed_in?
@@ -17,4 +19,5 @@
           = f.submit 'Give an answer', class: 'btn btn-primary'
 
   .answers
-  = render @question.answers
+    h3 Answers
+    = render @question.answers

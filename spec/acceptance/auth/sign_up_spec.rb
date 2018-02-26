@@ -1,14 +1,13 @@
 require 'rails_helper'
 
-feature 'User sign up', %q{
+feature 'User sign up', '
   In order to ask question
   As an user
   I want to be able to sign up
-} do
+' do
 
   scenario 'Sign up with valid data' do
     visit new_user_session_path
-
 
     click_on 'Sign up'
     fill_in 'Email', with: 'test@test.com'

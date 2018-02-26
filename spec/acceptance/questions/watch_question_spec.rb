@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-feature 'Watch question', %q{
+feature 'Watch question', '
   In order to get question
   As an user
   I want to be able to watch question
-} do
+' do
   given(:question) { create(:question) }
   given(:answer) { create(:answer, question: question) }
 

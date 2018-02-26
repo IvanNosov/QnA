@@ -12,12 +12,12 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 
 gem 'coffee-rails', '~> 4.2'
+gem 'devise'
 gem 'jbuilder', '~> 2.5'
+gem 'jquery-rails'
 gem 'slim-rails'
 gem 'turbolinks', '~> 5'
-gem 'devise'
 gem 'twitter-bootstrap-rails'
-gem 'jquery-rails'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
@@ -27,12 +27,12 @@ group :development, :test do
 end
 
 group :test do
-  gem 'shoulda-matchers'
-  gem 'faker'
   gem 'capybara'
-  gem 'launchy'
+  gem 'capybara-webkit'
   gem 'database_cleaner'
-  gem "capybara-webkit"
+  gem 'faker'
+  gem 'launchy'
+  gem 'shoulda-matchers'
 end
 
 group :development do
