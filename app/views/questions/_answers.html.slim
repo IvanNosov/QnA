@@ -1,0 +1,3 @@
+- @question.answers.each do |answer|
+  p= answer.body
+  = link_to('x', question_answer_path(@question, answer), method: :delete) if current_user.author_of? answer

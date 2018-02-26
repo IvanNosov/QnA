@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
+  protect_from_forgery prepend: true
   before_action :authenticate_user!, except: %i[index show]
-  before_action :set_question, except: %i[index show new]
+  before_action :set_question, only: %i[show destroy]
   before_action :author?, only: :destroy
 
   def index
@@ -45,7 +46,7 @@ class QuestionsController < ApplicationController
   private
 
   def author?
-    return nil if @answer.author? current_user
+    return nil if @question.author? current_user
     redirect_to question_path(@question), notice: 'You are not author of this answer!'
   end
 
