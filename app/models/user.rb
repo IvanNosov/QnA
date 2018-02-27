@@ -7,8 +7,7 @@ class User < ApplicationRecord
   has_many :answers
   validates :email, :password, presence: true
 
-
   def author_of?(resource)
-    self.id == resource.user_id
+    id == resource.user_id
   end
 end

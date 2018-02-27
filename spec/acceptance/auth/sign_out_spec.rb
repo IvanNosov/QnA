@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-feature 'User sign out', %q{
+feature 'User sign out', '
   In order to be able to look for question and answers
   As an user
   I want to be able to sign out
-} do
+' do
 
   given(:user) { create(:user) }
 

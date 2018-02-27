@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-feature 'Watch questions', %q{
+feature 'Watch questions', '
   In order to get all questions
   As an user
   I want to be able to watch questions list
-} do
+' do
 
   scenario 'User watch questions' do
     visit questions_path

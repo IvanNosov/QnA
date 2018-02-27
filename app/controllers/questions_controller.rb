@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
   protect_from_forgery prepend: true
   before_action :authenticate_user!, except: %i[index show]
-  before_action :set_question, only: %i[show destroy]
+  before_action :set_question, only: %i[show edit update destroy]
   before_action :author?, only: :destroy
 
   def index
@@ -16,8 +16,7 @@ class QuestionsController < ApplicationController
     @question = current_user.questions.new
   end
 
-  def edit;
-  end
+  def edit; end
 
   def create
     @question = current_user.questions.new(question_params)
@@ -31,7 +30,7 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if @question.update(questions_params)
+    if @question.update(question_params)
       redirect_to @question
     else
       render :edit
@@ -57,9 +56,4 @@ class QuestionsController < ApplicationController
   def question_params
     params.require(:question).permit(:title, :body)
   end
-
 end
-
-
-
-
