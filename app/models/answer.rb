@@ -9,7 +9,7 @@ class Answer < ApplicationRecord
   scope :best_answer, -> { where(best: true).limit(1) }
   scope :answers_without_best, -> { where(best: false) }
 
-  def best
+  def set_best
     return nil if best?
     question.answers.update_all(best: false)
     update(best: true)

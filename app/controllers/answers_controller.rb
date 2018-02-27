@@ -27,7 +27,7 @@ class AnswersController < ApplicationController
   end
 
   def best
-    @answer.best
+    @answer.set_best
   end
 
   private

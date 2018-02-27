@@ -33,12 +33,12 @@ RSpec.describe AnswersController, type: :controller do
     it 'deletes user answer' do
       expect do
         delete :destroy, params: { question_id: question,
-                                   id: user_answer }
+                                   id: user_answer }, format: :js
       end.to change(Answer, :count).by(-1)
     end
 
     it 'fail delete another\'s user answer' do
-      expect { delete :destroy, params: { question_id: question, id: answer } }
+      expect { delete :destroy, params: { question_id: question, id: answer }, format: :js }
         .to change(Answer, :count).by(0)
     end
 
