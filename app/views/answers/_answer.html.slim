@@ -3,6 +3,9 @@
     .card-block
       p.card-text
         = answer.body
+        ul
+        - answer.attachments.each do |a|
+          li= link_to a.file.filename, a.file.url
       - if answer.best?
         .font-weight-bold Best answer!
       - if user_signed_in? && current_user.author_of?(@question)

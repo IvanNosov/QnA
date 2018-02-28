@@ -22,7 +22,13 @@
       .form-group
         .actions
           = f.submit 'Give an answer', class: 'btn btn-primary'
+      p Attachments:
+      p
+        = f.fields_for :attachments do |attachment|
+          = render 'common/attachments_form', f: attachment
+          .links
+            = link_to_add_association 'add file', f, :attachments, partial: 'common/attachments_form'
 
-  .answers
-    h3 Answers
-    = render 'answers', question: @question
+.answers
+  h3 Answers
+  = render 'answers', question: @question

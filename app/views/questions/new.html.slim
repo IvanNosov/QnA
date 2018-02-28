@@ -10,9 +10,10 @@
     = f.text_area :body, class: 'form-control'
   p Attachments:
   p
-    = f.fields_for :attachments do |a|
-      = a.label :file
-      = a.file_field :file
+    = f.fields_for :attachments do |attachment|
+      = render 'common/attachments_form', f: attachment
+      .links
+        = link_to_add_association 'add file', f, :attachments, partial: 'common/attachments_form'
   .form-group
     .actions
       = f.submit 'Create', class: 'btn btn-primary'
