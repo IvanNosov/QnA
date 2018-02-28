@@ -7,7 +7,8 @@
   ul
     - @question.attachments.each do |a|
       li= link_to a.file.identifier, a.file.url
-
+      - if a.attachable.author? current_user
+        = link_to 'Remove', attachment_path(a), method: :delete
   - if user_signed_in? && current_user.author_of?(@question)
     = link_to 'Edit', edit_question_path(@question), class: 'btn btn-warning btn-xs'
     = link_to 'Delete', question_path(@question), method: :delete, class: 'btn btn-danger btn-xs'
@@ -31,4 +32,4 @@
 
 .answers
   h3 Answers
-  = render 'answers', question: @question
+  = render 'questions/answers', question: @question
