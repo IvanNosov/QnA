@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :set_question
-  before_action :set_answer, only: %i[show edit update best vote destroy]
+  before_action :set_answer, only: %i[show edit update best vote unvote destroy]
   before_action :author?, only: :destroy
 
   def show; end
@@ -37,13 +37,12 @@ class AnswersController < ApplicationController
         format.json { render json: { id: @answer.id, upvotes: @answer.up_votes, downvotes: @answer.down_votes, total: @answer.total_votes } }
       else
         format.json { render json: { error: @vote.errors.full_messages } }
-
       end
     end
   end
 
   def unvote
-    @question.cancel_vote(current_user.id)
+    @answer.cancel_vote(current_user.id)
     respond_to do |format|
       format.json { render json: { id: @answer.id, upvotes: @answer.up_votes, downvotes: @answer.down_votes, total: @answer.total_votes } }
     end
