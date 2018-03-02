@@ -3,6 +3,11 @@
     .card-block
       p.card-text
         = answer.body
+        ul
+        - answer.attachments.each do |a|
+          li= link_to a.file.identifier, a.file.url
+          - if a.attachable.author? current_user
+            = link_to 'Remove', attachment_path(a), method: :delete
       - if answer.best?
         .font-weight-bold Best answer!
       - if user_signed_in? && current_user.author_of?(@question)

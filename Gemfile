@@ -11,19 +11,23 @@ gem 'rails', '~> 5.1.4'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 
+gem 'carrierwave'
 gem 'coffee-rails', '~> 4.2'
 gem 'devise'
 gem 'jbuilder', '~> 2.5'
 gem 'jquery-rails'
+gem 'remotipart'
 gem 'slim-rails'
 gem 'turbolinks', '~> 5'
 gem 'twitter-bootstrap-rails'
+gem "cocoon"
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails'
   gem 'rails-controller-testing'
   gem 'rspec-rails'
+  gem 'pry-rails'
 end
 
 group :test do
