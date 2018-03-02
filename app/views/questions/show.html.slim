@@ -14,13 +14,13 @@
     = link_to 'Edit', edit_question_path(@question), class: 'btn btn-warning btn-xs'
     = link_to 'Delete', question_path(@question), method: :delete, class: 'btn btn-danger btn-xs'
 
-.vote-buttons
-  = link_to vote_question_path(@question, value: true), method: :post, remote: true do
-    p.glyphicon.glyphicon-arrow-up
+  .vote-buttons
+    = link_to vote_question_path(@question, value: true), method: :post, remote: true do
+      p.glyphicon.glyphicon-arrow-up
 
-  = link_to vote_question_path(@question, value: false), method: :post, remote: true do
-    p.glyphicon.glyphicon-arrow-down
-  = link_to unvote_question_path(@question), method: :delete, remote: true do
+    = link_to vote_question_path(@question, value: false), method: :post, remote: true do
+      p.glyphicon.glyphicon-arrow-down
+  = link_to unvote_question_path(@question), method: :delete, remote: true, class: 'unvote-question', style: display_voted(@question) do
     p.glyphicon.glyphicon-remove
 
 p id = "question_#{@question.id}_total_votes"
