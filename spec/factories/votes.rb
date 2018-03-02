@@ -1,4 +1,4 @@
 FactoryBot.define do
-  factory :attachment do
+  factory :vote do
   end
 end

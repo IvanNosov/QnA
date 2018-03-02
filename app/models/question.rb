@@ -1,9 +1,11 @@
 class Question < ApplicationRecord
   include Author
+  include Voteable
 
   has_many :answers, dependent: :destroy
   belongs_to :user
   has_many :attachments, as: :attachable
+  has_many :votes, as: :voteable
 
   validates :title, :body, presence: true
 

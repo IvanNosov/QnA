@@ -2,12 +2,36 @@
   .card.answer id=("answer_#{answer.id}")
     .card-block
       p.card-text
+        p id="answer_#{answer.id}_errors"
         = answer.body
         ul
         - answer.attachments.each do |a|
           li= link_to a.file.identifier, a.file.url
           - if a.attachable.author? current_user
             = link_to 'Remove', attachment_path(a), method: :delete
+
+      .answer-vote-buttons
+        = link_to vote_question_answer_path(answer.question, answer, value: true), method: :post, remote: true do
+          p.glyphicon.glyphicon-arrow-up
+
+        = link_to vote_question_answer_path(answer.question, answer, value: false), method: :post, remote: true do
+          p.glyphicon.glyphicon-arrow-down
+
+        = link_to unvote_question_answer_path(answer.question, answer), method: :delete, remote: true do
+          p.glyphicon.glyphicon-remove
+
+        p id = "answer_#{answer.id}_total_votes"
+          |total:
+          = answer.total_votes 
+
+        p id = "answer_#{answer.id}_up_votes"
+          |likes:
+          = answer.up_votes   
+
+        p id = "answer_#{answer.id}_down_votes"
+          |dislikes:
+          = answer.down_votes  
+
       - if answer.best?
         .font-weight-bold Best answer!
       - if user_signed_in? && current_user.author_of?(@question)
@@ -20,3 +44,7 @@
         p= f.text_area :body
         p= f.submit 'Update'
 br
+
+
+
+
