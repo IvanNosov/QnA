@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :set_question
-  before_action :set_answer, only: %i[show edit update best destroy]
+  before_action :set_answer, only: %i[show edit update best vote destroy]
   before_action :author?, only: :destroy
 
   def show; end
@@ -28,6 +28,25 @@ class AnswersController < ApplicationController
 
   def best
     @answer.set_best
+  end
+
+  def vote
+    @vote = Vote.create(voteable: @answer, user: current_user, value: params[:value])
+    respond_to do |format|
+      if @vote.save
+        format.json { render json: { id: @answer.id, upvotes: @answer.up_votes, downvotes: @answer.down_votes, total: @answer.total_votes } }
+      else
+        format.json { render json: { error: @vote.errors.full_messages } }
+
+      end
+    end
+  end
+
+  def unvote
+    @question.cancel_vote(current_user.id)
+    respond_to do |format|
+      format.json { render json: { id: @answer.id, upvotes: @answer.up_votes, downvotes: @answer.down_votes, total: @answer.total_votes } }
+    end
   end
 
   private

@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
   protect_from_forgery prepend: true
   before_action :authenticate_user!, except: %i[index show]
-  before_action :set_question, only: %i[show edit update destroy]
+  before_action :set_question, only: %i[show edit update destroy vote unvote]
   before_action :author?, only: :destroy
 
   def index
@@ -42,6 +42,25 @@ class QuestionsController < ApplicationController
   def destroy
     @question.destroy
     redirect_to questions_path, notice: 'Your question was successfully deleted.'
+  end
+
+  def vote
+    @vote = Vote.create(voteable: @question, user: current_user, value: params[:value])
+    respond_to do |format|
+      if @vote.save
+        format.json { render json: { id: @question.id, upvotes: @question.up_votes, downvotes: @question.down_votes, total: @question.total_votes } }
+      else
+        format.json { render json: { error: @vote.errors.full_messages } }
+
+      end
+    end
+  end
+
+  def unvote
+    @question.cancel_vote(current_user.id)
+    respond_to do |format|
+      format.json { render json: { id: @question.id, upvotes: @question.up_votes, downvotes: @question.down_votes, total: @question.total_votes } }
+    end
   end
 
   private
