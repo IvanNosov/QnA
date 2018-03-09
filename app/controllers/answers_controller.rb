@@ -1,8 +1,9 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :set_question
-  before_action :set_answer, only: %i[show edit update best vote unvote destroy]
-  before_action :author?, only: :destroy
+  before_action :set_answer, only: %i[show edit update best vote unvote destroy publish_answer]
+  before_action :check_author, only: :destroy
+  after_action :publish_answer, only: [:create]
 
   def show; end
 
@@ -50,11 +51,22 @@ class AnswersController < ApplicationController
 
   private
 
-  def author?
+  def check_author
     return nil if @answer.author? current_user
     redirect_to question_path(@question), notice: 'You are not author of this answer!'
   end
 
+  def publish_answer
+    return if @answer.errors.any?
+    ActionCable.server.broadcast(
+      "question-#{@question.id}",
+      ApplicationController.render(
+        partial: 'answers/answer_sub',
+        locals: { answer: @answer}
+      )
+    )
+  end
+  
   def set_question
     @question = Question.find(params[:question_id])
   end

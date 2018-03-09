@@ -1,6 +1,5 @@
 .question-errors
-.row
-  h3 Question
+.row id = "question-#{@question.id}"
   h4= @question.title
   p= @question.body
   p Attachments:
@@ -61,6 +60,6 @@ p id = "question_#{@question.id}_down_votes"
           .links
             = link_to_add_association 'add file', f, :attachments, partial: 'common/attachments_form'
 
-.answers
+.question-answers id = "question_#{@question.id}_answers" data-question-id = "#{@question.id}"
   h3 Answers
   = render 'questions/answers', question: @question
