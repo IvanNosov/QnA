@@ -28,3 +28,17 @@ $(document).on('turbolinks:load', function(){
       return $('.answer_' + response.id + '_errors').html(value)
     });
   })
+
+
+$(document).on('turbolinks:load', function () {
+    App.cable.subscriptions.create('AnswersChannel', {
+      connected: function () {
+        console.log("Connected")
+        this.perform('follow', { id: id })
+      },
+      received: function (data) {
+        $('.answers-list').append(data)
+        console.log(data)
+      }
+    }
+)});
