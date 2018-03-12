@@ -5,6 +5,7 @@ class QuestionsController < ApplicationController
   before_action :author?, only: :destroy
   after_action :publish_question, only: [:create]
 
+  include Commented
 
   def index
     @questions = Question.all
@@ -77,7 +78,7 @@ class QuestionsController < ApplicationController
       'questions',
       ApplicationController.render(
         partial: 'questions/question',
-        locals: { question: @question}
+        locals: { question: @question }
       )
     )
   end

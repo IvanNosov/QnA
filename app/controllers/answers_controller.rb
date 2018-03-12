@@ -5,6 +5,8 @@ class AnswersController < ApplicationController
   before_action :check_author, only: :destroy
   after_action :publish_answer, only: [:create]
 
+  include Commented
+
   def show; end
 
   def new
@@ -62,11 +64,11 @@ class AnswersController < ApplicationController
       "question-#{@question.id}",
       ApplicationController.render(
         partial: 'answers/answer_sub',
-        locals: { answer: @answer}
+        locals: { answer: @answer }
       )
     )
   end
-  
+
   def set_question
     @question = Question.find(params[:question_id])
   end

@@ -10,13 +10,13 @@ function editAnswer() {
 
 function voteAnswer() {
   $('.answer-vote-buttons').bind('ajax:success', function (e) {
-    response = JSON.parse(e.detail[2].response)
+    response = JSON.parse(JSON.stringify(e.detail[2].response))
     $('#answer_' + response.id + '_total_votes').html('total:' + response.total)
     $('#answer_' + response.id + '_up_votes').html('likes:' + response.upvotes)
     $('#answer_' + response.id + '_down_votes').html('dislikes:' + response.downvotes)
   }).bind('ajax:success', function (e) {
     e.preventDefault();
-    response = JSON.parse(e.detail[2].response)
+    response = JSON.parse(JSON.stringify(e.detail[2].response))
     var errors;
     if (e.detail[2].status === 401) {
       return $('.answer_' + response.id + '_errors').html(response.error);
@@ -34,7 +34,6 @@ function updateAnswers() {
 
   App.cable.subscriptions.create('AnswersChannel', {
     connected: function () {
-
       this.perform('follow', { question_id: question_id })
       console.log("Connected")
     },
@@ -45,9 +44,35 @@ function updateAnswers() {
   })
 }
 
+function updateComments() {
+  var question_id;
+  question_id = $('.question-answers').data('questionId')
+
+  App.comments = App.cable.subscriptions.create(
+  "CommentsChannel",
+    {
+      connected: function () {
+        this.perform('follow', { question_id: question_id })
+        console.log("Connected comments" + question_id)
+      },
+      received: function (data) {
+        console.log(data)
+        switch (data.type) {
+          case 'Question':
+            $('.question-comments').append(data.html);
+            break;
+          case 'Answer':
+            $('.answer-comments-' + data.id).append(data.html);
+            break;
+        }
+      }
+    });
+}
+
 
 $(document).on('turbolinks:load', function () {
   editAnswer();
   voteAnswer();
-  updateAnswer();
+  updateAnswers();
+  updateComments();
 })

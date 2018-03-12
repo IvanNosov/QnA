@@ -43,6 +43,14 @@
         p= f.label :body
         p= f.text_area :body
         p= f.submit 'Update'
+        
+  - if user_signed_in?
+      = render 'comments/form_answer', answer: answer
+
+  div class=("answer-comments-#{answer.id}")
+      - answer.comments.each do |comment|
+        = render 'comments/comment', comment: comment
+
 br
 
 

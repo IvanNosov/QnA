@@ -6,6 +6,7 @@ class Answer < ApplicationRecord
   belongs_to :user
   has_many :attachments, as: :attachable
   has_many :votes, as: :voteable
+  has_many :comments, as: :commentable, dependent: :destroy
 
   validates :body, presence: true
   validates_uniqueness_of :best, if: :best, scope: :question_id

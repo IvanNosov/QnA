@@ -8,6 +8,6 @@ class CreateComments < ActiveRecord::Migration[5.1]
     end
 
     add_reference :comments, :user, foreign_key: true
-    add_index :comments, [:commentable_id, :commentable_type]
+    add_index :comments, %i[commentable_id commentable_type]
   end
 end

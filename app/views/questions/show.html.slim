@@ -42,7 +42,13 @@ p id = "question_#{@question.id}_up_votes"
 p id = "question_#{@question.id}_down_votes"
   |dislikes:
   = @question.down_votes  
-
+- if user_signed_in?
+    .new-question-comment
+      = render 'comments/form_question', question: @question
+.question-comments
+    - @question.comments.each do |comment|
+      = render 'comments/comment', comment: comment
+    
 .row
   - if user_signed_in?
     h4 Your answer
@@ -60,6 +66,6 @@ p id = "question_#{@question.id}_down_votes"
           .links
             = link_to_add_association 'add file', f, :attachments, partial: 'common/attachments_form'
 
-.question-answers id = "question_#{@question.id}_answers" data-question-id = "#{@question.id}"
-  h3 Answers
-  = render 'questions/answers', question: @question
+  .question-answers id = "question_#{@question.id}_answers" data-question-id = "#{@question.id}"
+    h3 Answers
+    = render 'questions/answers', question: @question
