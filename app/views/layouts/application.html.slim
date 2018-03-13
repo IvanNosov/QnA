@@ -5,13 +5,14 @@ html lang="en"
     meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"
     meta name="viewport" content="width=device-width, initial-scale=1.0"
     title= content_for?(:title) ? yield(:title) : "Qa"
-    = csrf_meta_tags
     = stylesheet_link_tag "application", :media => "all"
     = javascript_include_tag "application"
     = javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"
+    = action_cable_meta_tag
+    = csrf_meta_tags
 
   body
-    .navbar.navbar-default.navbar-static-top
+    .navbar.navbar-default.navbar-static-top.navbar-inverse
       .container
         button.navbar-toggle type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse"
           span.icon-bar
@@ -19,7 +20,7 @@ html lang="en"
           span.icon-bar
         a =link_to 'QA', root_path, class: 'navbar-brand'
         .navbar-collapse.collapse.navbar-responsive-collapse
-          ul.nav.navbar-nav
+          ul.nav.navbar-nav.navbar-right
             - if user_signed_in?
               li= link_to 'Sign out', destroy_user_session_path, method: :delete
             - else
@@ -27,6 +28,6 @@ html lang="en"
 
     .container
       .row
-        .col-lg-9
+        .col-lg-12
           = bootstrap_flash
           = yield

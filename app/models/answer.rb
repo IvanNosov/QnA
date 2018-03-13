@@ -6,6 +6,7 @@ class Answer < ApplicationRecord
   belongs_to :user
   has_many :attachments, as: :attachable
   has_many :votes, as: :voteable
+  has_many :comments, as: :commentable, dependent: :destroy
 
   validates :body, presence: true
   validates_uniqueness_of :best, if: :best, scope: :question_id
@@ -22,15 +23,7 @@ class Answer < ApplicationRecord
     update(best: true)
   end
 
-  def total_votes
-    up_votes - down_votes
-  end
-
-  def up_votes
-    votes.where(value: true).size
-  end
-
-  def down_votes
-    votes.where(value: false).size
+  def question_author_id
+    question.user_id
   end
 end

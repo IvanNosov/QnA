@@ -23,13 +23,13 @@ feature 'Set the best answer for question', '
           visit question_path(question)
         end
         scenario 'present best link', js: true do
-          within '.answers' do
+          within '.question-answers' do
             expect(page).to have_link 'Best'
           end
         end
 
         scenario ' choose best answer', js: true do
-          within '.answers' do
+          within '.question-answers' do
             click_on 'Best'
             expect(page).to have_content 'Best answer!'
           end
@@ -43,7 +43,7 @@ feature 'Set the best answer for question', '
 
         within "#answer_#{answer.id}" do
           click_on 'Best'
-          expect(page).to have_content 'Best answer!'
+          expect(page).to have_content 'Best'
         end
         expect(current_path).to eq question_path(question)
       end

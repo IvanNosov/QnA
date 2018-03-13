@@ -25,14 +25,14 @@ feature 'Edit the answer', '
       end
 
       scenario 'see edit link' do
-        within '.answers' do
+        within '.question-answers' do
           expect(page).to have_link 'Edit'
         end
       end
 
       scenario 'try to edit his answer', js: true do
         click_on 'Edit'
-        within '.answers' do
+        within '.question-answers' do
           fill_in 'Body', with: 'edited answer'
           click_on 'Update'
           expect(page).to_not have_content answer.body

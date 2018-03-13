@@ -1,18 +1,6 @@
-.card.question
-  .card-block
-    h4.card-title
-      = question.title
-      - if user_signed_in? && current_user.author_of?(question)
-        = link_to 'Edit', '', class: 'btn btn-warning close edit-question-link', data: { question_id: question.id }
-        = link_to 'Delete', question_path(question), method: :delete, class: 'btn btn-danger close'
-    p.card-text
-      = question.body
-    = link_to 'Show', question_path(question), class: 'btn btn-primary'
-    = form_for question, remote: true, html: {id: "edit-question-#{question.id}"} do |f|
-        p
-        = f.label :title
-        = f.text_field :title
-        p
-        = f.label :body
-        = f.text_area :body
-        = f.submit 'Save'
+.panel.panel-primary
+  .panel-heading
+    .panel-title
+      = link_to question.title, question_path(question)
+  .panel-body
+    = question.body

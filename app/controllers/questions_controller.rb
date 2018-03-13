@@ -3,6 +3,9 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :set_question, only: %i[show edit update destroy vote unvote]
   before_action :author?, only: :destroy
+  after_action :publish_question, only: [:create]
+
+  include Commented
 
   def index
     @questions = Question.all
@@ -51,7 +54,6 @@ class QuestionsController < ApplicationController
         format.json { render json: { id: @question.id, upvotes: @question.up_votes, downvotes: @question.down_votes, total: @question.total_votes } }
       else
         format.json { render json: { error: @vote.errors.full_messages } }
-
       end
     end
   end
@@ -68,6 +70,17 @@ class QuestionsController < ApplicationController
   def author?
     return nil if @question.author? current_user
     redirect_to question_path(@question), notice: 'You are not author of this answer!'
+  end
+
+  def publish_question
+    return if @question.errors.any?
+    ActionCable.server.broadcast(
+      'questions',
+      ApplicationController.render(
+        partial: 'questions/question',
+        locals: { question: @question }
+      )
+    )
   end
 
   def set_question

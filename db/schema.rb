@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_180_301_090_136) do
+ActiveRecord::Schema.define(version: 20_180_309_163_127) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -30,6 +30,17 @@ ActiveRecord::Schema.define(version: 20_180_301_090_136) do
     t.integer 'attachable_id'
     t.string 'attachable_type'
     t.index %w[attachable_id attachable_type], name: 'index_attachments_on_attachable_id_and_attachable_type'
+  end
+
+  create_table 'comments', force: :cascade do |t|
+    t.string 'body'
+    t.integer 'commentable_id'
+    t.string 'commentable_type'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.bigint 'user_id'
+    t.index %w[commentable_id commentable_type], name: 'index_comments_on_commentable_id_and_commentable_type'
+    t.index ['user_id'], name: 'index_comments_on_user_id'
   end
 
   create_table 'questions', force: :cascade do |t|
@@ -61,4 +72,6 @@ ActiveRecord::Schema.define(version: 20_180_301_090_136) do
     t.datetime 'updated_at', null: false
     t.index %w[voteable_type voteable_id], name: 'index_votes_on_voteable_type_and_voteable_id'
   end
+
+  add_foreign_key 'comments', 'users'
 end

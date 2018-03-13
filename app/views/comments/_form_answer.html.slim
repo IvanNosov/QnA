@@ -1,0 +1,6 @@
+.row
+  = form_for(answer.comments.build, url: comment_question_answer_path(answer.question, answer), class: 'form-group', remote: true) do |f|
+    .form-group
+      = f.label :text
+      = f.text_area :body, class: 'form-control'
+      = f.submit 'Add Comment', class: 'btn btn-primary'
