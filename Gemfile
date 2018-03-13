@@ -21,6 +21,7 @@ gem 'remotipart'
 gem 'slim-rails'
 gem 'turbolinks', '~> 5'
 gem 'twitter-bootstrap-rails'
+gem "responders"
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
