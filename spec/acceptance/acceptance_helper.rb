@@ -1,11 +1,11 @@
 require 'rails_helper'
+require 'capybara/poltergeist'
+require "puma"
 
 RSpec.configure do |config|
-  Capybara.javascript_driver = :webkit
-  Capybara::Webkit.configure do |c|
-    c.allow_url('http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js')
-  end
-
+  Capybara.javascript_driver = :poltergeist
+  Capybara.server = :puma
+  
   config.include AcceptanceHelper, type: :feature
 
   config.use_transactional_fixtures = false

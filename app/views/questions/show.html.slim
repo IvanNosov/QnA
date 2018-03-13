@@ -44,12 +44,12 @@ p id = "question_#{@question.id}_down_votes"
   = @question.down_votes  
 - if user_signed_in?
     .new-question-comment
-      = render 'comments/form_question', question: @question
+      = render 'comments/form_question', question: @question  
 .question-comments
     - @question.comments.each do |comment|
       = render 'comments/comment', comment: comment
     
-.row
+.row.answer-form
   - if user_signed_in?
     h4 Your answer
     = form_for [@question, @answer], remote: true do |f|

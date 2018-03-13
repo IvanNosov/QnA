@@ -29,46 +29,57 @@ function voteAnswer() {
 }
 
 function updateAnswers() {
-  var question_id;
-  question_id = $('.question-answers').data('questionId')
+  if (($('.question-answers').length)) {
+    var question_id;
+    question_id = $('.question-answers').data('questionId')
 
-  App.cable.subscriptions.create('AnswersChannel', {
-    connected: function () {
-      this.perform('follow', { question_id: question_id })
-      console.log("Connected")
-    },
-    received: function (data) {
-      $('#question_' + question_id + '_answers').append(data)
-      console.log(data)
-    }
-  })
+    App.cable.subscriptions.create('AnswersChannel', {
+      connected: function () {
+        this.perform('follow', { question_id: question_id })
+        console.log("Connected")
+      },
+      received: function (data) {
+        $('#question_' + question_id + '_answers').append(data)
+        console.log(data)
+        voteAnswer();
+        editAnswer();
+      }
+    })
+  } else if (App.answers) {
+    App.answers.unsubscribe();
+    App.answers = null;
+  }
 }
 
 function updateComments() {
-  var question_id;
-  question_id = $('.question-answers').data('questionId')
+  if (($('.question-answers').length)) {
+    var question_id;
+    question_id = $('.question-answers').data('questionId')
 
-  App.comments = App.cable.subscriptions.create(
-  "CommentsChannel",
-    {
-      connected: function () {
-        this.perform('follow', { question_id: question_id })
-        console.log("Connected comments" + question_id)
-      },
-      received: function (data) {
-        console.log(data)
-        switch (data.type) {
-          case 'Question':
-            $('.question-comments').append(data.html);
-            break;
-          case 'Answer':
-            $('.answer-comments-' + data.id).append(data.html);
-            break;
+    App.comments = App.cable.subscriptions.create(
+      "CommentsChannel",
+      {
+        connected: function () {
+          this.perform('follow', { question_id: question_id })
+          console.log("Connected comments" + question_id)
+        },
+        received: function (data) {
+          console.log(data)
+          switch (data.type) {
+            case 'Question':
+              $('.question-comments').append(data.html);
+              break;
+            case 'Answer':
+              $('.answer-comments-' + data.id).append(data.html);
+              break;
+          }
         }
-      }
-    });
+      });
+  } else if (App.comments) {
+    App.comments.unsubscribe();
+    App.comments = null;
+  }
 }
-
 
 $(document).on('turbolinks:load', function () {
   editAnswer();

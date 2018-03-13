@@ -32,11 +32,11 @@ end
 
 group :test do
   gem 'capybara'
-  gem 'capybara-webkit'
   gem 'database_cleaner'
   gem 'faker'
   gem 'launchy'
   gem 'shoulda-matchers'
+  gem 'poltergeist'
 end
 
 group :development do
