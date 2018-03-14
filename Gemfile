@@ -21,7 +21,9 @@ gem 'remotipart'
 gem 'slim-rails'
 gem 'turbolinks', '~> 5'
 gem 'twitter-bootstrap-rails'
-gem "responders"
+gem 'responders'
+gem 'omniauth'
+gem 'omniauth-facebook'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
@@ -29,6 +31,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'rails-controller-testing'
   gem 'rspec-rails'
+  gem 'letter_opener'
 end
 
 group :test do

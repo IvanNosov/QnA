@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users
-
+  devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
   resources :questions do
     post 'vote', on: :member
     delete 'unvote', on: :member
