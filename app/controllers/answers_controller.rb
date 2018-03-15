@@ -7,26 +7,20 @@ class AnswersController < ApplicationController
 
   include Commented
 
-  def show; end
-
-  def new
-    @answer = @question.answers.new
-  end
+  respond_to :js
 
   def create
-    @answer = @question.answers.new(answer_params)
-    @answer.user = current_user
-    @answer.save
+    @answer = @question.answers.create(answer_params.merge(user_id: current_user.id))
   end
 
   def edit; end
 
   def update
-    @answer.update(answer_params)
+    respond_with(@answer.update(answer_params))
   end
 
   def destroy
-    @answer.destroy
+    respond_with(@answer.destroy)
   end
 
   def best

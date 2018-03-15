@@ -8,17 +8,17 @@ class QuestionsController < ApplicationController
   include Commented
 
   def index
-    @questions = Question.all
+    respond_with @questions = Question.all
   end
 
   def show
     @answer = @question.answers.build
     @answer.attachments.build
+    respond_with @question
   end
 
   def new
-    @question = current_user.questions.new
-    @question.attachments.build
+    respond_with @question = current_user.questions.new
   end
 
   def edit; end
@@ -32,19 +32,16 @@ class QuestionsController < ApplicationController
     else
       render :new
     end
+    # respond_with @question
   end
 
   def update
-    if @question.update(question_params)
-      redirect_to @question
-    else
-      render :edit
-    end
+    @question.update(question_params)
+    respond_with @question
   end
 
   def destroy
-    @question.destroy
-    redirect_to questions_path, notice: 'Your question was successfully deleted.'
+    respond_with @question.destroy
   end
 
   def vote
