@@ -1,11 +1,9 @@
 class QuestionsController < ApplicationController
   protect_from_forgery prepend: true
-  before_action :authenticate_user!, except: %i[index show]
-  before_action :set_question, only: %i[show edit update destroy vote unvote]
-  before_action :author?, only: :destroy
   after_action :publish_question, only: [:create]
 
   include Commented
+  load_and_authorize_resource
 
   def index
     respond_with @questions = Question.all
@@ -32,7 +30,6 @@ class QuestionsController < ApplicationController
     else
       render :new
     end
-    # respond_with @question
   end
 
   def update
@@ -63,11 +60,6 @@ class QuestionsController < ApplicationController
   end
 
   private
-
-  def author?
-    return nil if @question.author? current_user
-    redirect_to question_path(@question), notice: 'You are not author of this answer!'
-  end
 
   def publish_question
     return if @question.errors.any?

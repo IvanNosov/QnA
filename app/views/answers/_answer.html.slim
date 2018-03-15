@@ -7,7 +7,7 @@
         ul
         - answer.attachments.each do |a|
           li= link_to a.file.identifier, a.file.url
-          - if a.attachable.author? current_user
+          - if can? :delete, a
             = link_to 'Remove', attachment_path(a), method: :delete
 
       .answer-vote-buttons
@@ -34,11 +34,11 @@
 
       - if answer.best?
         .font-weight-bold Best answer!
-      - if user_signed_in? && current_user.author_of?(@question)
-        = link_to 'Best', best_question_answer_path(answer.question, answer), method: :patch, remote: true, class: ' btn btn-xs btn-success best-answer-link', data: {answer_id: answer.id}
-      - if user_signed_in? && current_user.author_of?(answer)
-        = link_to 'Edit', '', class: 'btn btn-warning btn-xs edit-btn', data: { answer_id: answer.id }
-        = link_to 'Delete', question_answer_path(@question, answer), method: :delete, remote: true, class: 'btn btn-danger btn-xs delete-button'
+    - if can? :best, answer
+      = link_to 'Best', best_question_answer_path(answer.question, answer), method: :patch, remote: true, class: ' btn btn-xs btn-success best-answer-link', data: {answer_id: answer.id}
+    - if can?(:update, answer)
+      = link_to 'Edit', '', class: 'btn btn-warning btn-xs edit-btn', data: { answer_id: answer.id }
+      = link_to 'Delete', question_answer_path(@question, answer), method: :delete, remote: true, class: 'btn btn-danger btn-xs delete-button'
       = form_for [@question, answer], remote: true, html: {id: "edit-answer-#{answer.id}"} do |f|
         p= f.label :body
         p= f.text_area :body

@@ -41,10 +41,5 @@ RSpec.describe AnswersController, type: :controller do
       expect { delete :destroy, params: { question_id: question, id: answer }, format: :js }
         .to change(Answer, :count).by(0)
     end
-
-    it 'redirect to question view' do
-      delete :destroy, params: { question_id: question, id: answer }
-      expect(response).to redirect_to question_path(question)
-    end
   end
 end
