@@ -17,15 +17,19 @@ gem 'coffee-rails', '~> 4.2'
 gem 'devise'
 gem 'jbuilder', '~> 2.5'
 gem 'jquery-rails'
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-twitter'
 gem 'remotipart'
+gem 'responders'
 gem 'slim-rails'
 gem 'turbolinks', '~> 5'
 gem 'twitter-bootstrap-rails'
-gem "responders"
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails'
+  gem 'letter_opener'
   gem 'pry-rails'
   gem 'rails-controller-testing'
   gem 'rspec-rails'
@@ -33,11 +37,12 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'capybara-email'
   gem 'database_cleaner'
   gem 'faker'
   gem 'launchy'
-  gem 'shoulda-matchers'
   gem 'poltergeist'
+  gem 'shoulda-matchers'
 end
 
 group :development do

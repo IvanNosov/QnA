@@ -1,11 +1,12 @@
 require 'rails_helper'
 require 'capybara/poltergeist'
-require "puma"
+require 'puma'
+require 'capybara/email/rspec'
 
 RSpec.configure do |config|
   Capybara.javascript_driver = :poltergeist
   Capybara.server = :puma
-  
+
   config.include AcceptanceHelper, type: :feature
 
   config.use_transactional_fixtures = false
