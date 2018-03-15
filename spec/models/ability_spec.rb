@@ -26,7 +26,7 @@ describe Ability do
     it { should be_able_to :comment, Question }
     it { should be_able_to :vote, Question }
     it { should be_able_to :unvote, Question }
-    it { should be_able_to :unvote, Answer }
+    it { should be_able_to :vote, Answer }
     it { should be_able_to :unvote, Answer }
 
     it { should be_able_to :update, create(:question, user: user), user: user }

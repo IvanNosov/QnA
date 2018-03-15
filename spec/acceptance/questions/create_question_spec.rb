@@ -20,4 +20,11 @@ feature 'Create question', '
 
     expect(page).to have_content 'Your question successfully created.'
   end
+
+  scenario 'Non-authenticated user try to create question' do
+    visit '/questions'
+    click_on 'Ask question'
+
+    expect(page).to have_content 'You are not authorized to access this page.'
+  end
 end
