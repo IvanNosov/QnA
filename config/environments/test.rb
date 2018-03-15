@@ -37,8 +37,20 @@ Rails.application.configure do
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  config.action_mailer.default_url_options = { host: 'localhost' }
 
+  OmniAuth.config.test_mode = true
+  OmniAuth.config.mock_auth[:twitter] = OmniAuth::AuthHash.new(
+    provider: 'twitter',
+    uid: '1234567'
+  )
+  OmniAuth.config.mock_auth[:facebook] = OmniAuth::AuthHash.new(
+    provider: 'facebook',
+    uid: '12354567',
+    info: {
+      email: 'test@example.com'
+    }
+  )
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 end
