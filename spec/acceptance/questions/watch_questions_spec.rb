@@ -5,14 +5,14 @@ feature 'Watch questions', '
   As an user
   I want to be able to watch questions list
 ' do
-scenario 'User watch questions' do
-  visit questions_path
-  expect(page).to have_content 'All Questions'
-  expect(current_path).to eq questions_path
-end
+  scenario 'User watch questions' do
+    visit questions_path
+    expect(page).to have_content 'All Questions'
+    expect(current_path).to eq questions_path
+  end
 
-context 'mulitple sessions' do
-  given(:user) { create(:user) }
+  context 'mulitple sessions' do
+    given(:user) { create(:user) }
 
     scenario "question appears on another user's page", js: true do
       Capybara.using_session('user') do

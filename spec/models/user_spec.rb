@@ -42,7 +42,7 @@ RSpec.describe User, type: :model do
       end
     end
 
-    context "user does not exist" do
+    context 'user does not exist' do
       let(:auth) { OmniAuth::AuthHash.new(provider: 'facebook', uid: '123456', info: { email: 'new@user.com' }) }
 
       it 'creates new user' do
@@ -63,13 +63,11 @@ RSpec.describe User, type: :model do
         expect(user.authorizations).to_not be_empty
       end
 
-
       it 'create auth with provider and uid' do
         authorization = User.find_for_oauth(auth).authorizations.first
         expect(authorization.provider).to eq auth.provider
         expect(authorization.uid).to eq auth.uid
       end
     end
-
   end
 end

@@ -1,0 +1,12 @@
+.container
+  .row
+    - if @auth
+      = form_tag send_confirmation_path
+        .form-group
+          = label_tag 'email'
+          = email_field_tag 'email', nil, class: 'form-control'
+        = hidden_field_tag 'provider', @auth.provider
+        = hidden_field_tag 'uid', @auth.uid
+        = submit_tag 'Confirm', class: 'btn btn-primary'
+    - else
+      | Something goes wrong, please, try again 
