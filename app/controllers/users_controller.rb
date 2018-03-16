@@ -15,4 +15,4 @@ class UsersController < ApplicationController
     User.find_for_oauth(auth)
     redirect_to root_path, notice: "You successfully confirmed your mail and #{provider} account"
   end
-   end
+end

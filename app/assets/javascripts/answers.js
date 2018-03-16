@@ -38,11 +38,9 @@ function updateAnswers() {
         this.perform('follow', {
           question_id: question_id
         })
-        console.log("Connected")
       },
       received: function (data) {
         $('#question_' + question_id + '_answers').append(data)
-        console.log(data)
         voteAnswer();
         editAnswer();
       }
@@ -64,10 +62,8 @@ function updateComments() {
           this.perform('follow', {
             question_id: question_id
           })
-          console.log("Connected comments" + question_id)
         },
         received: function (data) {
-          console.log(data)
           switch (data.type) {
             case 'Question':
               $('.question-comments').append(data.html);

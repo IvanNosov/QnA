@@ -1,4 +1,3 @@
-
 class ConfirmationMailer < ApplicationMailer
   def send_confirmation(email, link)
     @link = link

@@ -4,7 +4,6 @@ $(document).on('turbolinks:load', function () {
     var question_id;
     $(this).hide;
     question_id = $(this).data('questionId');
-    console.log(question_id);
     return $('form#edit-question-' + question_id).show();
   });
 });
@@ -41,12 +40,10 @@ $(document).on('turbolinks:load', function () {
 $(document).on('turbolinks:load', function () {
   App.cable.subscriptions.create('QuestionsChannel', {
     connected: function () {
-      console.log("Connected")
       this.perform('follow')
     },
     received: function (data) {
       $('.questions-list').append(data)
-      console.log(data)
     }
   }
   )
