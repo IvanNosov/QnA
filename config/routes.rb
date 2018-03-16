@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  use_doorkeeper
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 
   get 'confirm/:link', to: 'users#confirm', as: 'confirm'
@@ -18,6 +19,15 @@ Rails.application.routes.draw do
   resources :attachments, only: [:destroy]
 
   root 'questions#index'
+
+  namespace :api do
+    namespace :v1 do
+      resource :profiles do 
+        get :me, on: :collection
+        get :all
+      end
+    end
+  end
 
   mount ActionCable.server => '/cable'
 end
