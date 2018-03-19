@@ -1,22 +1,26 @@
-class Api::V1::QuestionsController < Api::V1::BaseController
-  def index
-    @questions = Question.all
-    respond_with @questions
-  end
+module Api
+  module V1
+    class QuestionsController < BaseController
+      def index
+        @questions = Question.all
+        respond_with @questions
+      end
 
-  def show
-    @question = Question.find(params[:id])
-    respond_with @question
-  end
+      def show
+        @question = Question.find(params[:id])
+        respond_with @question
+      end
 
-  def create
-    @question = current_resource_owner.questions.create(question_params)
-    respond_with @question
-  end
+      def create
+        @question = current_resource_owner.questions.create(question_params)
+        respond_with @question
+      end
 
-  private
+      private
 
-  def question_params
-    params.require(:question).permit(:title, :body)
+      def question_params
+        params.require(:question).permit(:title, :body)
+      end
+    end
   end
 end

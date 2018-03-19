@@ -56,7 +56,7 @@ RSpec.describe 'Answers API' do
         end
 
         it 'attachment object contains url' do
-          expect(response.body).to be_json_eql(attachment.file.url.to_json).at_path('0/attachments/0/file/url')
+          expect(response.body).to be_json_eql(attachment.file.url.to_json).at_path('0/attachments/0/attachment_url')
         end
       end
     end
@@ -112,7 +112,7 @@ RSpec.describe 'Answers API' do
         end
 
         it 'attachment answer contains url' do
-          expect(response.body).to be_json_eql(attachment.file.url.to_json).at_path('attachments/0/file/url')
+          expect(response.body).to be_json_eql(attachment.file.url.to_json).at_path('attachments/0/attachment_url')
         end
       end
     end

@@ -1,9 +1,13 @@
-class Api::V1::ProfilesController < Api::V1::BaseController
-  def me
-    respond_with current_resource_owner
-  end
+module Api
+  module V1
+    class ProfilesController < BaseController
+      def me
+        respond_with current_resource_owner
+      end
 
-  def all
-    respond_with(@users = User.where.not(id: current_resource_owner.id))
+      def all
+        respond_with(@users = User.where.not(id: current_resource_owner.id))
+      end
+    end
   end
 end
