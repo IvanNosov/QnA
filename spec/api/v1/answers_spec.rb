@@ -23,36 +23,9 @@ RSpec.describe 'Answers API' do
         expect(response).to be_success
       end
 
-      it 'returns list of answers' do
-        expect(response.body).to have_json_size(2)
-      end
-
-      %w[id body created_at updated_at].each do |attr|
-        it "answer object contains #{attr}" do
-          expect(response.body).to be_json_eql(answer.send(attr.to_sym).to_json).at_path("0/#{attr}")
-        end
-      end
-
-      context 'comments' do
-        it 'included in question object' do
-          expect(response.body).to have_json_size(1).at_path('0/comments')
-        end
-
-        %w[id body user_id].each do |attr|
-          it "comment object contains #{attr}" do
-            expect(response.body).to be_json_eql(comment.send(attr.to_sym).to_json).at_path("0/comments/0/#{attr}")
-          end
-        end
-      end
-
-      context 'attachments' do
-        it 'included in question object' do
-          expect(response.body).to have_json_size(1).at_path('0/attachments')
-        end
-
-        it 'attachment object contains url' do
-          expect(response.body).to be_json_eql(attachment.file.url.to_json).at_path('0/attachments/0/attachment_url')
-        end
+      it_behaves_like 'attachments, comments, and answers' do
+        let(:path) { '0/' }
+        let(:answer_path) { '' }
       end
     end
   end
@@ -77,33 +50,11 @@ RSpec.describe 'Answers API' do
         expect(response).to be_success
       end
 
-      %w[id body created_at updated_at].each do |attr|
-        it "question object contains #{attr}" do
-          expect(response.body).to be_json_eql(answer.send(attr.to_sym).to_json).at_path(attr.to_s)
-        end
+      it_behaves_like 'attachments, comments, and answers' do
+        let(:path) { '' }
+        let(:answer_path) { '' }
       end
-
-      context 'comments' do
-        it 'included in answer object' do
-          expect(response.body).to have_json_size(1).at_path('comments')
-        end
-
-        %w[id body user_id].each do |attr|
-          it "comment object contains #{attr}" do
-            expect(response.body).to be_json_eql(comment.send(attr.to_sym).to_json).at_path("comments/0/#{attr}")
-          end
-        end
-      end
-
-      context 'attachments' do
-        it 'included in answer object' do
-          expect(response.body).to have_json_size(1).at_path('attachments')
-        end
-
-        it 'attachment answer contains url' do
-          expect(response.body).to be_json_eql(attachment.file.url.to_json).at_path('attachments/0/attachment_url')
-        end
-      end
+      
     end
   end
 
@@ -132,17 +83,14 @@ RSpec.describe 'Answers API' do
         end
       end
 
-      context 'comments' do
-        it 'included in answer object' do
-          expect(response.body).to have_json_size(0).at_path('comments')
+      %w[comments attachments].each do |attr|
+        context attr do
+          it 'included in answer object' do
+            expect(response.body).to have_json_size(0).at_path(attr)
+          end
         end
       end
 
-      context 'attachments' do
-        it 'included in answer object' do
-          expect(response.body).to have_json_size(0).at_path('attachments')
-        end
-      end
     end
   end
 end
