@@ -2,16 +2,12 @@ require 'rails_helper'
 
 describe 'Questions API' do
   describe 'GET /index' do
-    context 'unauthorized' do
-      it 'returns 401 status if request without access token' do
-        get '/api/v1/questions', params: { format: 'json' }
-        expect(response.status).to eq 401
-      end
-      it 'returns 401 status if access token is wrong' do
-        get '/api/v1/questions', params: { format: 'json', access_token: '1243456467' }
-        expect(response.status).to eq 401
-      end
+
+    it_behaves_like 'API Authenticable' do
+      let(:no_token_request) { get '/api/v1/questions', params: { format: :json } }
+      let(:bad_token_request) { get '/api/v1/questions', params: { format: :json, access_token: '12346678' } }
     end
+
 
     context 'authorized' do
       let(:access_token) { create(:access_token) }
@@ -52,15 +48,10 @@ describe 'Questions API' do
 
     describe 'GET /show' do
       let!(:question) { create(:question, id: 1) }
-      context 'unauthorized' do
-        it 'returns 401 status if request without access token' do
-          get '/api/v1/questions', params: { format: 'json' }
-          expect(response.status).to eq 401
-        end
-        it 'returns 401 status if access token is wrong' do
-          get '/api/v1/questions', params: { format: 'json', access_token: '1243456467' }
-          expect(response.status).to eq 401
-        end
+
+      it_behaves_like 'API Authenticable' do
+        let(:no_token_request) { get '/api/v1/questions/1', params: { format: :json } }
+        let(:bad_token_request) { get '/api/v1/questions/1', params: { format: :json, access_token: '12346678' } }
       end
 
       context 'authorized' do
@@ -117,16 +108,11 @@ describe 'Questions API' do
       end
 
       describe 'POST /create' do
-        context 'unauthorized' do
-          it 'returns 401 status if request without access token' do
-            get '/api/v1/questions', params: { format: 'json' }
-            expect(response.status).to eq 401
-          end
-          it 'returns 401 status if access token is wrong' do
-            get '/api/v1/questions', params: { format: 'json', access_token: '1243456467' }
-            expect(response.status).to eq 401
-          end
-        end
+        
+      it_behaves_like 'API Authenticable' do
+        let(:no_token_request) { post '/api/v1/questions/', params: { format: :json } }
+        let(:bad_token_request) { post '/api/v1/questions/', params: { format: :json, access_token: '12346678' } }
+      end
 
         context 'authorized' do
           let(:access_token) { create(:access_token) }
