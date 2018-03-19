@@ -11,6 +11,7 @@ gem 'rails', '~> 5.1.4'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 
+gem 'active_model_serializers'
 gem 'cancancan', '~> 2.0'
 gem 'carrierwave'
 gem 'cocoon'
@@ -27,7 +28,6 @@ gem 'responders'
 gem 'slim-rails'
 gem 'turbolinks', '~> 5'
 gem 'twitter-bootstrap-rails'
-gem 'active_model_serializers'
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails'
