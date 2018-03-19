@@ -11,11 +11,13 @@ gem 'rails', '~> 5.1.4'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 
+gem 'active_model_serializers'
 gem 'cancancan', '~> 2.0'
 gem 'carrierwave'
 gem 'cocoon'
 gem 'coffee-rails', '~> 4.2'
 gem 'devise'
+gem 'doorkeeper', '4.2.6'
 gem 'jbuilder', '~> 2.5'
 gem 'jquery-rails'
 gem 'omniauth'
@@ -26,8 +28,6 @@ gem 'responders'
 gem 'slim-rails'
 gem 'turbolinks', '~> 5'
 gem 'twitter-bootstrap-rails'
-gem 'doorkeeper', '4.2.6'
-
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails'
@@ -42,10 +42,10 @@ group :test do
   gem 'capybara-email'
   gem 'database_cleaner'
   gem 'faker'
+  gem 'json_spec'
   gem 'launchy'
   gem 'poltergeist'
   gem 'shoulda-matchers'
-  gem 'json_spec'
 end
 
 group :development do
