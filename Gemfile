@@ -25,9 +25,12 @@ gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'remotipart'
 gem 'responders'
+gem 'sidekiq'
 gem 'slim-rails'
 gem 'turbolinks', '~> 5'
 gem 'twitter-bootstrap-rails'
+gem 'whenever', require: false
+
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails'

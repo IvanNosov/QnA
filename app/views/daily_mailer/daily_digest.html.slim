@@ -1,0 +1,6 @@
+div Hello, user
+h2 There were new questions created, take a look! :)
+div
+  p
+  - @questions.each do |question|
+    li= link_to question.title, question

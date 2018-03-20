@@ -9,6 +9,9 @@ Rails.application.routes.draw do
     post 'vote', on: :member
     delete 'unvote', on: :member
     post :comment, on: :member
+
+    resources :subscriptions, only: %i[create destroy]
+
     resources :answers do
       patch 'best', on: :member
       post 'vote', on: :member
