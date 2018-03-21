@@ -17,6 +17,8 @@ class Answer < ApplicationRecord
   scope :best_answer, -> { where(best: true).limit(1) }
   scope :answers_without_best, -> { where(best: false) }
 
+  after_create :answer_notification
+
   def set_best
     return nil if best?
     question.answers.update_all(best: false)
@@ -25,5 +27,13 @@ class Answer < ApplicationRecord
 
   def question_author_id
     question.user_id
+  end
+
+  private
+
+  def answer_notification
+    question.subscriptions.each do |subscription|
+      QuestionMailer.answer_notification(subscription.user, question).deliver_later
+    end
   end
 end

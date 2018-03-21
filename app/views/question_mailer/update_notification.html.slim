@@ -1,0 +1,9 @@
+Hello user 
+div>
+  |
+    This question was updated
+  |
+  =link_to @question.title, @question    
+div
+  |
+  =link_to 'Unsubscribe', question_subscription_url(@question, @subscription), method: :delete
