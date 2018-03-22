@@ -1,10 +1,10 @@
 require_relative '../acceptance_helper'
 
-feature 'Get updates of question to email', %q{
+feature 'Get updates of question to email', '
   In order to get question updates
   As an authenticated user
   I want to be able to subscribe/unsubscribe to question
-} do
+' do
 
   given(:user) { create(:user) }
   given(:question) { create(:question) }
@@ -16,7 +16,7 @@ feature 'Get updates of question to email', %q{
 
     scenario 'subscribe for question' do
       visit question_path(question)
-      click_on "Subscribe"
+      click_on 'Subscribe'
       expect(page).to have_content 'Subscribed!'
     end
 

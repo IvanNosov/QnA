@@ -3,12 +3,11 @@ require 'rails_helper'
 RSpec.describe 'Answers API' do
   describe 'GET /index' do
     let!(:question) { create(:question) }
-   
+
     it_behaves_like 'API Authenticable' do
       let(:no_token_request) { get "/api/v1/questions/#{question.id}/answers", params: { format: :json } }
       let(:bad_token_request) { get "/api/v1/questions/#{question.id}/answers", params: { format: :json, access_token: '12346678' } }
     end
-
 
     context 'authorized' do
       let(:access_token) { create(:access_token) }
@@ -54,7 +53,6 @@ RSpec.describe 'Answers API' do
         let(:path) { '' }
         let(:answer_path) { '' }
       end
-      
     end
   end
 
@@ -65,7 +63,6 @@ RSpec.describe 'Answers API' do
       let(:no_token_request) { post "/api/v1/questions/#{question.id}/answers", params: { format: :json } }
       let(:bad_token_request) { post "/api/v1/questions/#{question.id}/answers", params: { format: :json, access_token: '12346678' } }
     end
-
 
     context 'authorized' do
       let(:access_token) { create(:access_token) }
@@ -90,7 +87,6 @@ RSpec.describe 'Answers API' do
           end
         end
       end
-
     end
   end
 end

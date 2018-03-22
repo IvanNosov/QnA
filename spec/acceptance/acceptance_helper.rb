@@ -2,6 +2,7 @@ require 'rails_helper'
 require 'capybara/poltergeist'
 require 'puma'
 require 'capybara/email/rspec'
+require 'thinking_sphinx'
 
 RSpec.configure do |config|
   Capybara.javascript_driver = :poltergeist
@@ -17,6 +18,10 @@ RSpec.configure do |config|
 
   config.before(:each) do
     DatabaseCleaner.strategy = :transaction
+  end
+
+  config.before(:each, sphinx: true) do
+    DatabaseCleaner.strategy = :truncation
   end
 
   config.before(:each, js: true) do
