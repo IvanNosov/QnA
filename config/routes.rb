@@ -5,6 +5,10 @@ Rails.application.routes.draw do
   get 'confirm/:link', to: 'users#confirm', as: 'confirm'
   post 'send_confirmation', to: 'users#send_confirmation'
 
+  resource :searches, only: [] do
+    post 'search'
+  end
+
   resources :questions do
     post 'vote', on: :member
     delete 'unvote', on: :member

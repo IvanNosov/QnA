@@ -2,12 +2,10 @@ require 'rails_helper'
 
 describe 'Profile API' do
   describe 'get /me' do
-    
-  it_behaves_like 'API Authenticable' do
-    let(:no_token_request) { get '/api/v1/profiles/me', params: { format: :json } }
-    let(:bad_token_request) { get '/api/v1/profiles/me', params: { format: :json, access_token: '12346678' } }
-  end
-
+    it_behaves_like 'API Authenticable' do
+      let(:no_token_request) { get '/api/v1/profiles/me', params: { format: :json } }
+      let(:bad_token_request) { get '/api/v1/profiles/me', params: { format: :json, access_token: '12346678' } }
+    end
 
     context 'authorized' do
       let(:me) { create(:user) }

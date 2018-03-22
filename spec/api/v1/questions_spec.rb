@@ -2,7 +2,6 @@ require 'rails_helper'
 
 describe 'Questions API' do
   describe 'GET /index' do
-
     it_behaves_like 'API Authenticable' do
       let(:no_token_request) { get '/api/v1/questions', params: { format: :json } }
       let(:bad_token_request) { get '/api/v1/questions', params: { format: :json, access_token: '12346678' } }
@@ -38,7 +37,6 @@ describe 'Questions API' do
         let(:path) { '0/' }
         let(:answer_path) { 'answers/0/' }
       end
-
     end
 
     describe 'GET /show' do

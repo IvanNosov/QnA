@@ -19,12 +19,20 @@ html lang="en"
           span.icon-bar
           span.icon-bar
         a =link_to 'QA', root_path, class: 'navbar-brand'
+        = form_tag search_searches_path, class: 'navbar-form navbar-left' do
+            .form-group
+              = select_tag :model, options_for_select(models), class: 'btn btn-outline-secondary dropdown-toggle'
+              = text_field_tag :query, nil, placeholder: 'Search', class: 'form-control mr-sm-2'
+            = submit_tag "Search", class: 'btn btn-outline-success my-2 my-sm-0'
         .navbar-collapse.collapse.navbar-responsive-collapse
           ul.nav.navbar-nav.navbar-right
             - if user_signed_in?
               li= link_to 'Sign out', destroy_user_session_path, method: :delete
             - else
               li= link_to "Sign in", new_user_session_path
+
+
+
 
     .container
       .row
