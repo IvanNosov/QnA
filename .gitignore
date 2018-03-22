@@ -25,4 +25,4 @@
 /public/spec
 
 config/*.sphinx.conf
-dp/sphinx
+db/sphinx
