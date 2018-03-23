@@ -6,14 +6,9 @@ require "capistrano/deploy"
 require "capistrano/rvm"
 require "capistrano/bundler"
 require "capistrano/rails"
-
-require 'capistrano/deploy'
-require 'capistrano/rvm'
-require 'capistrano/bundler'
-require 'capistrano/rails'
-# require 'capistrano/sidekiq'
-# require 'whenever/capistrano'
-
+require 'capistrano/sidekiq'
+require 'whenever/capistrano'
+require 'json'
 # Load the SCM plugin appropriate to your project:
 #
 # require "capistrano/scm/hg"

@@ -11,7 +11,7 @@ set :deploy_user, 'developer'
 append :linked_files, 'config/database.yml', 'config/secrets.yml'
 
 # Default value for linked_dirs is []
-append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system'
+append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system', 'public/uploads'
 
 namespace :deploy do
   desc 'Restart application' do
@@ -21,6 +21,38 @@ namespace :deploy do
       end
     end
   end
+      #ActionCable task
+  desc 'Restart ActionCable' do
+    task :restart_action_cable do
+      on roles(:app), in: :sequence, wait: 5 do
+      # Find the Passenger Standalone instance name
+        instances = JSON.parse(capture(:'passenger-config', 'list-instances', '--json'))
+        instance_name = instances.find { |i| i['integration_mode'] == 'standalone' }&.dig('name')
+    
+        if instance_name.nil?
+          # The instance isn't running so start a new one
+          within(current_path) do
+            with(env: 'NOEXEC_EXCLUDE=passenger') do
+            execute(:passenger, 'start',
+              '-e', fetch(:stage),
+              '-p', '28080',
+              '-R', 'cable/config.ru',
+              '--pid-file', shared_path.join('tmp/pids/cable.pid'),
+              '--log-file', shared_path.join('log/cable.log'),
+              '--force-max-concurrent-requests-per-process', '0',
+              '--daemonize'
+              )
+            end
+          end
+          else
+            # Restart the instance
+            execute(:'passenger-config', 'restart-app', current_path, '--instance', instance_name)
+          end
+        end
+      end 
+    end
+
+  #db load schema
   namespace :db do
     desc 'Load the database schema if needed' do
       task load: [:set_rails_env] do
@@ -37,5 +69,6 @@ namespace :deploy do
       end
     end
     after :publishing, :restart
+    after :publishing, :restart_action_cable
   end
 end
