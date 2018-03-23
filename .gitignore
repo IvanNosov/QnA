@@ -27,3 +27,4 @@
 config/*.sphinx.conf
 db/sphinx
 config/database.yml
+config/secrets.yml
