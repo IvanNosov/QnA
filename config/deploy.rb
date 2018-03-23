@@ -40,5 +40,6 @@ namespace :deploy do
     after :publishing, :restart
     after :deploy, "thinking_sphinx:configure"
     after :deploy, "thinking_sphinx:start"
+    after :deploy, "thinking_sphinx:index"
   end
 end
