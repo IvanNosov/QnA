@@ -58,7 +58,7 @@ Rails.application.configure do
   # Use a real queuing backend for Active Job (and separate queues per environment)
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "qa_#{Rails.env}"
-  
+
   config.action_cable.disable_request_forgery_protection = true
   config.action_cable.allowed_request_origins = ["http://52.24.181.91/"]
 
@@ -90,8 +90,11 @@ Rails.application.configure do
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
 
-  config.action_mailer.default_url_options = { host: 'http://52.24.181.91/', port: 4321 }
-
+  config.action_mailer.default_url_options = { :host => '54.186.176.148' }
+  ActionMailer::Base.delivery_method = :smtp
+  ActionMailer::Base.perform_deliveries = true
+  ActionMailer::Base.raise_delivery_errors = true
+  
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 end
