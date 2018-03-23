@@ -38,6 +38,7 @@ namespace :deploy do
       end
     end
     after :publishing, :restart
-    after :deploy, "ts:start"
+    after :deploy, "thinking_sphinx:configure"
+    after :deploy, "thinking_sphinx:start"
   end
 end
