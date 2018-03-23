@@ -32,8 +32,7 @@ gem 'thinking-sphinx'
 gem 'turbolinks', '~> 5'
 gem 'twitter-bootstrap-rails'
 gem 'whenever', require: false
-gem 'dotenv'
-gem 'dotenv-deployment', require: 'dotenv/deployment'
+
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails'
