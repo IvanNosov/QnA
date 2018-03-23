@@ -38,5 +38,6 @@ namespace :deploy do
       end
     end
     after :publishing, :restart
+    after :deploy, "ts:start"
   end
 end
