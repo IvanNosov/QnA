@@ -12,19 +12,21 @@ append :linked_files, 'config/database.yml', 'config/secrets.yml'
 
 # Default value for linked_dirs is []
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system', 'public/uploads'
+# after :publishing, :restart
+# after :deploy, 'thinking_sphinx:configure'
+# after :deploy, 'thinking_sphinx:generate'
+# after :deploy, 'thinking_sphinx:restart'
+# after :deploy, 'thinking_sphinx:index'
+
+after 'deploy:publishing', 'deploy:restart', 'ts:restart'
 
 namespace :deploy do
-  desc 'Restart application' do
-    task :restart do
-      on roles(:app), in: :sequence, wait: 5 do
-        invoke 'unicorn:reload'
-      end
-    end
+  task :restart do
+    invoke 'unicorn:stop'
+    invoke 'unicorn:reload'
   end
 
-  after :publishing, :restart
-  after :deploy, 'thinking_sphinx:configure'
-  after :deploy, 'thinking_sphinx:generate'
-  after :deploy, 'thinking_sphinx:restart'
-  after :deploy, 'thinking_sphinx:index'
+  task :stop do
+    invoke 'unicorn:stop'
+  end
 end
