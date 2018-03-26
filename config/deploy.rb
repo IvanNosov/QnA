@@ -17,30 +17,14 @@ namespace :deploy do
   desc 'Restart application' do
     task :restart do
       on roles(:app), in: :sequence, wait: 5 do
-        execute :touch, release_path.join('tmp/restart.txt')
+        invoke 'unicorn:reload'
       end
     end
   end
-  #db load schema
-  namespace :db do
-    desc 'Load the database schema if needed' do
-      task load: [:set_rails_env] do
-        on primary :db do
-          unless test(%([ -e "#{shared_path.join('.schema_loaded')}" ]))
-            within release_path do
-              with rails_env: fetch(:rails_env) do
-                execute :rake, 'db:schema:load'
-                execute :touch, shared_path.join('.schema_loaded')
-              end
-            end
-          end
-        end
-      end
-    end
-    after :publishing, :restart
-    after :deploy, "thinking_sphinx:configure"    
-    after :deploy, "thinking_sphinx:generate"    
-    after :deploy, "thinking_sphinx:restart"
-    after :deploy, "thinking_sphinx:index"
-  end
+
+  after :publishing, :restart
+  after :deploy, 'thinking_sphinx:configure'
+  after :deploy, 'thinking_sphinx:generate'
+  after :deploy, 'thinking_sphinx:restart'
+  after :deploy, 'thinking_sphinx:index'
 end
