@@ -4,11 +4,12 @@
       p.card-text
         p id="answer_#{answer.id}_errors"
         = answer.body
-        ul
-        - answer.attachments.each do |a|
-          li= link_to a.file.identifier, a.file.url
-          - if can? :delete, a
-            = link_to 'Remove', attachment_path(a), method: :delete
+        - cache collection_relation_cache_key_for(:attachment, answer)
+          ul
+          - answer.attachments.each do |a|
+            li= link_to a.file.identifier, a.file.url
+            - if can? :delete, a
+              = link_to 'Remove', attachment_path(a), method: :delete
 
       .answer-vote-buttons
         = link_to vote_question_answer_path(answer.question, answer, value: true), method: :post, remote: true do

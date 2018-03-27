@@ -34,6 +34,7 @@ gem 'twitter-bootstrap-rails'
 gem 'whenever', require: false
 gem 'unicorn'
 gem 'backup'
+gem 'redis-rails'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
