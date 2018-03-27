@@ -1,4 +1,5 @@
-.row.comment
-  .container
-    p= comment.user.try(:email)
-    p= comment.body
+-cache comment do
+  .row.comment
+    .container
+      p= comment.user.try(:email)
+      p= comment.body

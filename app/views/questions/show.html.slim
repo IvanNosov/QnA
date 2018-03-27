@@ -1,13 +1,15 @@
 .question-errors
 .row id = "question-#{@question.id}"
-  h4= @question.title
-  p= @question.body
-  p Attachments:
-  ul
-    - @question.attachments.each do |a|
-      li= link_to a.file.identifier, a.file.url
-      -if can? :delete, a 
-        = link_to 'Remove', attachment_path(a), method: :delete
+  - cache @question do
+    h4= @question.title
+    p= @question.body
+  - cache collection_relation_cache_key_for(:attachment, @question) do
+    p Attachments:
+    ul
+      - @question.attachments.each do |a|
+        li= link_to a.file.identifier, a.file.url
+        -if can? :delete, a 
+          = link_to 'Remove', attachment_path(a), method: :delete
   - if can? :update, @question
     = link_to 'Edit', '', class: 'btn btn-warning btn-xs edit-question-link', data: { question_id: @question.id }
     = link_to 'Delete', question_path(@question), method: :delete, class: 'btn btn-danger btn-xs'
