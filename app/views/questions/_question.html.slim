@@ -1,6 +1,6 @@
-.panel.panel-primary
-  .panel-heading
-    .panel-title
-      = link_to question.title, question_path(question)
-  .panel-body
-    = question.body
+
+row
+  .card.mb-3.bg-light
+    .card-header = link_to question.title, question_path(question)
+    .card-body
+      p.card-text = question.body.truncate(60)

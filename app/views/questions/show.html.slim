@@ -1,59 +1,58 @@
 .question-errors
 .row id = "question-#{@question.id}"
   - cache @question do
-    h4= @question.title
-    p= @question.body
-  - cache collection_relation_cache_key_for(:attachment, @question) do
-    p Attachments:
-    ul
-      - @question.attachments.each do |a|
-        li= link_to a.file.identifier, a.file.url
-        -if can? :delete, a 
-          = link_to 'Remove', attachment_path(a), method: :delete
-  - if can? :update, @question
-    = link_to 'Edit', '', class: 'btn btn-warning btn-xs edit-question-link', data: { question_id: @question.id }
-    = link_to 'Delete', question_path(@question), method: :delete, class: 'btn btn-danger btn-xs'
-  - if current_user
-  p = subscription_link(@question) 
-  = form_for @question, remote: true, html: {id: "edit-question-#{@question.id}"} do |f|
-        p
-        = f.label :title
-        = f.text_field :title
-        p
-        = f.label :body
-        = f.text_area :body
-        = f.submit 'Save'
-        
-        
-  .vote-buttons
-    = link_to vote_question_path(@question, value: true), method: :post, remote: true do
-      p.glyphicon.glyphicon-arrow-up
+    .card.border-primary.mb-3.col-lg-12
+      .card-body
+        h4.card-title = @question.title
+        p.card-text = @question.body
+      .card-footer 
+        - cache collection_relation_cache_key_for(:attachment, @question) do
+        - if @question.attachments.present?
+          p Attachments:
+          ul
+            - @question.attachments.each do |a|
+              li= link_to a.file.identifier, a.file.url
+              -if can? :delete, a 
+                = link_to 'Remove', attachment_path(a), method: :delete
+        .container 
+          .row       
+            - if can? :update, @question
+              = link_to 'Edit', '', class: 'btn btn-warning btn-sm edit-question-link mr-sm-2', data: { question_id: @question.id }
+              = link_to 'Delete', question_path(@question), method: :delete, class: 'btn btn-danger btn-sm mr-sm-2'
+            - if current_user
+              = subscription_link(@question) 
 
-    = link_to vote_question_path(@question, value: false), method: :post, remote: true do
-      p.glyphicon.glyphicon-arrow-down
+            .vote-buttons
+              = link_to vote_question_path(@question, value: true), method: :post, remote: true, class: 'mr-sm-2' do 
+                i.material-icons.md-18 thumb_up
+              a id = "question_#{@question.id}_total_votes"
+                = @question.total_votes
+              = link_to  vote_question_path(@question, value: false), method: :post, remote: true, class: 'ml-sm-2 mr-sm-2' do
+                i.material-icons.md-18 thumb_down
+            = link_to unvote_question_path(@question), method: :delete, remote: true, class: 'unvote-question', style: display_voted(@question), class: 'mr-sm-2' do
+              i.material-icons.md-18 thumbs_up_down
 
-  = link_to unvote_question_path(@question), method: :delete, remote: true, class: 'unvote-question', style: display_voted(@question) do
-    p.glyphicon.glyphicon-remove
+            
 
-p id = "question_#{@question.id}_total_votes"
-  | total:
-  = @question.total_votes 
-
-p id = "question_#{@question.id}_up_votes"
-  | likes:
-  = @question.up_votes   
-
-p id = "question_#{@question.id}_down_votes"
-  |dislikes:
-  = @question.down_votes  
-- if user_signed_in?
-    .new-question-comment
-      = render 'comments/form_question', question: @question  
 .question-comments
-    - @question.comments.each do |comment|
-      = render 'comments/comment', comment: comment
+  .container-fluid
+    .row
+      .card.col-lg
+        .card-header Comments
+        - @question.comments.each do |comment|
+          = render 'comments/comment', comment: comment
+      - if user_signed_in?
+        .new-question-comment.col-lg
+          = render 'comments/form_question', question: @question
+br
     
-.row.answer-form
+
+.question-answers id = "question_#{@question.id}_answers" data-question-id = "#{@question.id}"
+  .card
+    .card-header Answers
+    = render 'questions/answers', question: @question
+
+.answer-form
   - if user_signed_in?
     h4 Your answer
     = form_for [@question, @answer], remote: true do |f|
@@ -69,6 +68,20 @@ p id = "question_#{@question.id}_down_votes"
           .links
             = link_to_add_association 'add file', f, :attachments, partial: 'common/attachments_form'
 
-  .question-answers id = "question_#{@question.id}_answers" data-question-id = "#{@question.id}"
-    h3 Answers
-    = render 'questions/answers', question: @question
+
+
+
+
+
+
+
+
+    //change edit form
+    / = form_for @question, remote: true, html: {id: "edit-question-#{@question.id}"} do |f|
+    /     p
+    /     = f.label :title
+    /     = f.text_field :title
+    /     p
+    /     = f.label :body
+    /     = f.text_area :body
+    /     = f.submit 'Save'

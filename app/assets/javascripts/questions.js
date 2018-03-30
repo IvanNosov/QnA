@@ -11,9 +11,7 @@ $(document).on('turbolinks:load', function () {
 $(document).on('turbolinks:load', function () {
   $('.vote-buttons').bind('ajax:success', function (e) {
     response = JSON.parse(e.detail[2].response)
-    $('#question_' + response.id + '_total_votes').html('total:' + response.total)
-    $('#question_' + response.id + '_up_votes').html('likes:' + response.upvotes)
-    $('#question_' + response.id + '_down_votes').html('dislikes:' + response.downvotes)
+    $('#question_' + response.id + '_total_votes').html(response.total)
     $('.unvote-question').show()
     var errors;
     if (e.detail[2].status === 401) {
@@ -31,8 +29,6 @@ $(document).on('turbolinks:load', function () {
   $('.unvote-question').bind('ajax:success', function (e) {
     response = JSON.parse(e.detail[2].response)
     $('#question_' + response.id + '_total_votes').html('total:' + response.total)
-    $('#question_' + response.id + '_up_votes').html('likes:' + response.upvotes)
-    $('#question_' + response.id + '_down_votes').html('dislikes:' + response.downvotes)
     $('.unvote-question').hide()
   })
 })

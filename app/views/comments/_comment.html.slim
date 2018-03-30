@@ -1,5 +1,5 @@
 -cache comment do
-  .row.comment
-    .container
-      p= comment.user.try(:email)
-      p= comment.body
+  card.
+    =comment.user.try(:email)
+    | : 
+    =comment.body

@@ -11,9 +11,8 @@ function editAnswer() {
 function voteAnswer() {
   $('.answer-vote-buttons').bind('ajax:success', function (e) {
     response = JSON.parse(e.detail[2].response)
-    $('#answer_' + response.id + '_total_votes').html('total:' + response.total)
-    $('#answer_' + response.id + '_up_votes').html('likes:' + response.upvotes)
-    $('#answer_' + response.id + '_down_votes').html('dislikes:' + response.downvotes)
+    $('#answer_' + response.id + '_total_votes').html(response.total)
+
   }).bind('ajax:success', function (e) {
     e.preventDefault();
     response = JSON.parse(e.detail[2].response)

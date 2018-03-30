@@ -30,11 +30,12 @@ gem 'sidekiq'
 gem 'slim-rails'
 gem 'thinking-sphinx'
 gem 'turbolinks', '~> 5'
-gem 'twitter-bootstrap-rails'
+gem 'bootstrap', '~> 4.0.0'
 gem 'whenever', require: false
 gem 'unicorn'
 gem 'backup'
 gem 'redis-rails'
+gem 'material_icons'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
@@ -43,6 +44,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'rails-controller-testing'
   gem 'rspec-rails'
+  gem 'rails_layout'
 end
 
 group :test do
